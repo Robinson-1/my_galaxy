@@ -81,14 +81,33 @@ class MainWidget(Widget):
     def update_ship(self):
         x0 = self.perspective_point_x
 
-        x1, y1 = self.transform(x0 - self.SHIP_WIDTH*self.width/2, self.SHIP_BASE_Y*self.height)
-        x2, y2 = self.transform(x0, (self.SHIP_BASE_Y + self.SHIP_HEIGHT)*self.height)
-        x3, y3 = self.transform(x0 + self.SHIP_WIDTH*self.width/2, self.SHIP_BASE_Y*self.height)
+        self.ship_coordinaates[0] = (x0 - self.SHIP_WIDTH*self.width/2, self.SHIP_BASE_Y*self.height)
+        self.ship_coordinaates[1] = (x0, (self.SHIP_BASE_Y + self.SHIP_HEIGHT)*self.height)
+        self.ship_coordinaates[2] = (x0 + self.SHIP_WIDTH*self.width/2, self.SHIP_BASE_Y*self.height)
+
+        x1, y1 = self.transform(*self.ship_coordinaates[0])
+        x2, y2 = self.transform(*self.ship_coordinaates[1])
+        x3, y3 = self.transform(*self.ship_coordinaates[2])
 
         self.ship.points = [x1, y1, x2, y2, x3, y3]
-    
+
+    def check_ship_collision(self,):
+        for i in range(0, len(self.tiles_coordinates)):
+            ti_x, ti_y = self.tiles_coordinates[i]
+            if ti_y > self.current_y_loop + 1:
+                return False
+            if self.check_ship_collision_with_tile(ti_x, ti_y):
+                return True
+        return False
+
     def check_ship_collision_with_tile(self, ti_x, ti_y):
         xmin, ymin = self.get_tile_coordinates(ti_x, ti_y)
+        xmax, ymax = self.get_tile_coordinates(ti_x + 1, ti_y + 1)
+        for i in range(0, 3):
+            px, py = self.ship_coordinaates[i]
+            if xmin <= px <= xmax and ymin <= py <= ymax:
+                True
+        return False
 
     def init_tiles(self):
         with self.canvas:
@@ -216,6 +235,9 @@ class MainWidget(Widget):
             self.current_offset_y -= spacing_y
             self.current_y_loop += 1
             self.generate_tiles_coordinates()
+        
+        if not self.check_ship_collision():
+            print("you suck")
 
 class GalaxyApp(App):
     pass 
