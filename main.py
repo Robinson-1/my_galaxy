@@ -34,11 +34,11 @@ class MainWidget(Widget):
 
     current_offset_y = 0
     current_y_loop = 0
-    SPEED = 9
+    SPEED = 4
 
     current_offset_x = 0
     current_speed_x = 0
-    SPEED_X = 10
+    SPEED_X = 4
 
     NB_TILES = 15
     tiles = []
@@ -50,6 +50,7 @@ class MainWidget(Widget):
         self.init_vertical_lines()
         self.init_horizontal_lines()
         self.init_tiles()
+        self.pre_fill_tiles_coordinates()
         self.generate_tiles_coordinates()
 
         if self.is_desktop():
@@ -70,6 +71,10 @@ class MainWidget(Widget):
             for i in range(0, self.NB_TILES):
                 self.tiles.append(Quad())
     
+    def pre_fill_tiles_coordinates(self):
+        for i in range(0,10):
+            self.tiles_coordinates.append((0, i))
+
     def generate_tiles_coordinates(self):
 
         last_y = 0
