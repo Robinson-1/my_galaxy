@@ -17,6 +17,7 @@ from kivy.properties import NumericProperty, Clock, ObjectProperty, StringProper
 from kivy.uix.widget import Widget
 
 Builder.load_file("menu.kv")
+Builder.load_file("options.kv")
 
 class MainWidget(RelativeLayout):
     from transforms import transform, transform_2D, transform_perspective
@@ -25,6 +26,10 @@ class MainWidget(RelativeLayout):
     menu_widget = ObjectProperty()
     perspective_point_x = NumericProperty(0)
     perspective_point_y = NumericProperty(0)
+
+    options_widget = ObjectProperty()
+    options_button_title = StringProperty("OPTIONS")
+    options_title = StringProperty("OPTIONS")
 
     V_NB_LINES = 12 # even only
     V_LINES_SPACING = .25  # % of screen
@@ -79,7 +84,6 @@ class MainWidget(RelativeLayout):
         self.init_ship()
         self.pre_fill_tiles_coordinates()
         self.generate_tiles_coordinates()
-
 
         if self.is_desktop():
             self._keyboard = Window.request_keyboard(self.keyboard_closed, self)
@@ -308,7 +312,7 @@ class MainWidget(RelativeLayout):
         if self.state_game_over:
             self.sounds_gameover_voice.play()
     
-    def  on_menu_button_pressed(self):
+    def on_menu_button_pressed(self):
         if self.state_game_over:
             self.sounds_restart.play()
         else:
@@ -317,6 +321,10 @@ class MainWidget(RelativeLayout):
         self.state_game_started = True
         self.menu_widget.opacity = 0
         self.reset_game()
+    
+    def on_options_button_pressed(self):
+        self.menu_widget.opacity = 0.01
+        self.options_widget.opacity = 1
 
 
 
