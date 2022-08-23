@@ -24,4 +24,13 @@
         text: root.parent.options_button_title
         pos_hint: { "center_x": .8, "center_y": .1}
         size_hint: .2, .2
-        on_press: root.parent.on_options_button_pressed()
+        on_press: root.open_popup()
+
+<OptionsPopup>:
+    id: options_popup
+    size_hint: .8, .8
+    auto_dismiss: False
+    title: 'Options'
+    Button:
+        text: 'Welcome'
+        on_press: options_popup.dismiss()
