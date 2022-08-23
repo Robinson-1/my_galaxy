@@ -36,7 +36,10 @@ class MainWidget(RelativeLayout):
 
     current_offset_y = 0
     current_y_loop = 0
-    SPEED = 5
+
+    START_SPEED = 3
+
+    speed = START_SPEED
 
     current_offset_x = 0
     current_speed_x = 0
@@ -107,6 +110,8 @@ class MainWidget(RelativeLayout):
 
         self.current_offset_x = 0
         self.current_speed_x = 0
+
+        self.speed = self.START_SPEED
         
         self.tiles_coordinates = []
 
@@ -276,9 +281,10 @@ class MainWidget(RelativeLayout):
         self.update_tiles()
         self.update_ship()
         time_factor = dt*60
+        self.speed += dt/10
 
         if not self.state_game_over and self.state_game_started:
-            self.current_offset_y += self.SPEED * time_factor * self.height/400
+            self.current_offset_y += self.speed * time_factor * self.height/400
             self.current_offset_x += self.current_speed_x * time_factor * self.width/900
             
             spacing_y = self.H_LINES_SPACING * self.height
