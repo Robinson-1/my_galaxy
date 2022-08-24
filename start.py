@@ -2,7 +2,7 @@ from kivy.app import App
 from kivy.uix.popup import Popup
 from kivy.uix.relativelayout import RelativeLayout
 
-class MenuWidget(RelativeLayout):
+class StartWidget(RelativeLayout):
     def on_touch_down(self, touch):
         if self.opacity == 0:
             return False
@@ -18,4 +18,4 @@ class ScorePopup(Popup):
 class PopUpWindow(App):
     def build(self):
 
-        return MenuWidget()
+        return StartWidget()
