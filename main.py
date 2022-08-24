@@ -26,9 +26,9 @@ class MainWidget(RelativeLayout):
     perspective_point_x = NumericProperty(0)
     perspective_point_y = NumericProperty(0)
 
-    options_popup = ObjectProperty()
-    options_button_title = StringProperty("OPTIONS")
-    options_title = StringProperty("OPTIONS")
+    score_popup = ObjectProperty()
+    score_button_title = StringProperty("Highscores")
+    score_title = StringProperty("OPTIONS")
 
     V_NB_LINES = 12 # even only
     V_LINES_SPACING = .25  # % of screen

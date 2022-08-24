@@ -21,16 +21,16 @@
     Button:
         font_size: dp(30)
         font_name: 'fonts/Eurostile.ttf'
-        text: root.parent.options_button_title
-        pos_hint: { "center_x": .8, "center_y": .1}
-        size_hint: .2, .2
+        text: root.parent.score_button_title
+        pos_hint: { "center_x": .2, "center_y": .1}
+        size_hint: .15, .15
         on_press: root.open_popup()
 
-<OptionsPopup>:
-    id: options_popup
+<ScorePopup>:
+    id: score_popup
     size_hint: .8, .8
     auto_dismiss: False
-    title: 'Options'
+    title: 'Highscores'
     Button:
         text: 'Welcome'
-        on_press: options_popup.dismiss()
+        on_press: score_popup.dismiss()

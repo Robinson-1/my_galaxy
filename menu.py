@@ -9,10 +9,10 @@ class MenuWidget(RelativeLayout):
         return super(RelativeLayout, self).on_touch_down(touch)
     
     def open_popup(self):
-        pops = OptionsPopup()
+        pops = ScorePopup()
         pops.open()
 
-class OptionsPopup(Popup):
+class ScorePopup(Popup):
     pass
 
 class PopUpWindow(App):
