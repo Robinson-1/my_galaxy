@@ -1,12 +1,16 @@
 import random
 
+from kivy.config import Config
 from kivy.core.audio import SoundLoader
 from kivy.lang import Builder
 from kivy.uix.relativelayout import RelativeLayout
-from kivy.app import App
+
+Config.set('graphics', 'width', '900')
+Config.set('graphics', 'height', '400')
 
 from kivy import platform
 from kivy.core.window import Window
+from kivy.app import App
 from kivy.graphics.context_instructions import Color
 from kivy.graphics.vertex_instructions import Line, Quad, Triangle
 from kivy.properties import NumericProperty, Clock, ObjectProperty, StringProperty
@@ -14,7 +18,7 @@ from kivy.uix.widget import Widget
 
 Builder.load_file("menu.kv")
 
-class MainWidget(RelativeLayout):
+class GameWidget(RelativeLayout):
     from transforms import transform, transform_2D, transform_perspective
     from user_actions import on_keyboard_down, on_keyboard_up, on_touch_down, on_touch_up, keyboard_closed
 
@@ -71,7 +75,7 @@ class MainWidget(RelativeLayout):
     sounds_restart = None
 
     def __init__(self, **kwargs):
-        super(MainWidget, self).__init__(**kwargs)
+        super(GameWidget, self).__init__(**kwargs)
         self.init_audio()
         self.init_vertical_lines()
         self.init_horizontal_lines()
@@ -84,7 +88,7 @@ class MainWidget(RelativeLayout):
             self._keyboard = Window.request_keyboard(self.keyboard_closed, self)
             self._keyboard.bind(on_key_down=self.on_keyboard_down)
             self._keyboard.bind(on_key_up=self.on_keyboard_up)
-
+        
         Clock.schedule_interval(self.update, 1.0 / 60.0)
         self.sounds_galaxy.play()
     
