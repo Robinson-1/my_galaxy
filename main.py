@@ -19,8 +19,15 @@ class StartWindow(Screen):
     menu_title = StringProperty("G   A   L   A   X   Y")
     play_button_title = StringProperty("PLAY")
 
+    def open_popup(self):
+        pops = ScorePopup()
+        pops.open()
+
 class GameWindow(Screen):
     pass
+
+class ScorePopup(Popup):
+     pass
 
 kv = Builder.load_file("main.kv")
 

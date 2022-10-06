@@ -12,3 +12,11 @@ Speed is now incremented with time. Added at a rate of `self.speed += dt/10` aft
 ### Options menu
 
 Added screen management.
+
+
+
+### Art credit
+
+Main images sources from associated files from tutorial. Others listed below.
+
+[Settings button](https://opengameart.org/content/ui-black-button-settings) by Anatoly753.
