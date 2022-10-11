@@ -1,4 +1,6 @@
 import random
+import os
+from datetime import date
 
 from kivy.config import Config
 from kivy.core.audio import SoundLoader
@@ -73,6 +75,9 @@ class GameWidget(RelativeLayout):
     sounds_gameover_voice = None
     sounds_music1 = None
     sounds_restart = None
+
+    SCORE_FILENAME = r'./highscores.csv'
+    player_name = 'default'
 
     def __init__(self, **kwargs):
         super(GameWidget, self).__init__(**kwargs)
@@ -306,6 +311,7 @@ class GameWidget(RelativeLayout):
             self.sounds_gameover_impact.play()
             Clock.schedule_once(self.play_gamover_voice_sound, 1)
             print("you suck")
+            self.update_highscores()
     
     def play_gamover_voice_sound(self, dt):
         if self.state_game_over:
@@ -320,3 +326,30 @@ class GameWidget(RelativeLayout):
         self.state_game_started = True
         self.menu_widget.opacity = 0
         self.reset_game()
+    
+    def check_highscore(self):
+        #checks for highscore, if none return None.
+        if not os.path.exists(self.SCORE_FILENAME):
+            return None
+        return 10
+
+    def update_highscores(self):
+        #Function to update highscores files
+        date_today = date.today().strftime("%d/%m/%Y")
+        if not self.check_highscore():
+            with open(self.SCORE_FILENAME, "w") as file:
+                file.write(f"{self.player_name},{date_today},{self.current_y_loop}\n")
+            return
+        with open(self.SCORE_FILENAME, "r") as file:
+            lines = file.readlines()
+            high_scores = [line.split(",") for line in lines]
+
+        high_scores.append([self.player_name,date_today,str(self.current_y_loop) + "\n"])
+        print(high_scores)
+        high_scores.sort(key=lambda row: int(row[2]))
+
+        with open(self.SCORE_FILENAME, "w") as file:
+            for i, score in enumerate(high_scores[::-1]):
+                file.write(",".join(score))
+                if i == 20:
+                    break
