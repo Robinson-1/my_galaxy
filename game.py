@@ -67,6 +67,7 @@ class GameWidget(RelativeLayout):
     menu_title = StringProperty("G   A   L   A   X   Y")
     menu_button_title = StringProperty("START")
     score_txt = StringProperty()
+    highscore_txt = StringProperty()
 
     sounds_begin = None
     sounds_galaxy = None
@@ -87,6 +88,7 @@ class GameWidget(RelativeLayout):
         self.init_ship()
         self.pre_fill_tiles_coordinates()
         self.generate_tiles_coordinates()
+        self.highscore_txt = "Highscore: " + str(self.check_highscore())
 
         if self.is_desktop():
             self._keyboard = Window.request_keyboard(self.keyboard_closed, self)
@@ -298,8 +300,7 @@ class GameWidget(RelativeLayout):
             while self.current_offset_y >= spacing_y:
                 self.current_offset_y -= spacing_y
                 self.current_y_loop += 1
-                self.score_txt = "SCORE: " + str(self.current_y_loop )
-                self.generate_tiles_coordinates()
+                self.score_txt = "SCORE: " + str(self.current_y_loop)
         
         if not self.check_ship_collision() and not self.state_game_over:
             self.state_game_over = True
@@ -310,6 +311,7 @@ class GameWidget(RelativeLayout):
             self.sounds_gameover_impact.play()
             Clock.schedule_once(self.play_gamover_voice_sound, 1)
             self.update_highscores()
+            self.highscore_txt = "Highscore: " + str(self.check_highscore())
     
     def play_gamover_voice_sound(self, dt):
         if self.state_game_over:

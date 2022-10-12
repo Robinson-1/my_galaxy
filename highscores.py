@@ -2,10 +2,13 @@ import os
 from datetime import date
 
 def check_highscore(self):
-    #checks for highscore, if none return None.
+    # checks for highscore, if none return None.
     if not os.path.exists(self.SCORE_FILENAME):
         return None
-    return 10
+    with open(self.SCORE_FILENAME, "r") as file:
+        top_score = int(file.readline().split(",")[2])
+    print(str(top_score))
+    return top_score
 
 def update_highscores(self):
     #Function to update highscores files
