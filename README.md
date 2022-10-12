@@ -9,6 +9,10 @@ Audio/fonts/imges are available [here](https://codewithjonathan.net/resourceskiv
 
 Speed is now incremented with time. Added at a rate of `self.speed += dt/10` after some experimentation.
 
-### Options menu
+### Added a screen manager
 
-Added screen management.
+Added screen management. This will eventually be updated to include settings screen and potentially other game modes.
+
+### Added a highscores button on main screen. 
+
+A file called highscores.csv will be created if none exists and high scores read and updated every run.

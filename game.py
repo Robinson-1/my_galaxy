@@ -21,6 +21,7 @@ Builder.load_file("menu.kv")
 class GameWidget(RelativeLayout):
     from transforms import transform, transform_2D, transform_perspective
     from user_actions import on_keyboard_down, on_keyboard_up, on_touch_down, on_touch_up, keyboard_closed
+    from highscores import check_highscore, update_highscores
 
     menu_widget = ObjectProperty()
     perspective_point_x = NumericProperty(0)
@@ -66,6 +67,7 @@ class GameWidget(RelativeLayout):
     menu_title = StringProperty("G   A   L   A   X   Y")
     menu_button_title = StringProperty("START")
     score_txt = StringProperty()
+    highscore_txt = StringProperty()
 
     sounds_begin = None
     sounds_galaxy = None
@@ -73,6 +75,9 @@ class GameWidget(RelativeLayout):
     sounds_gameover_voice = None
     sounds_music1 = None
     sounds_restart = None
+
+    SCORE_FILENAME = r'./highscores.csv'
+    player_name = 'default'
 
     def __init__(self, **kwargs):
         super(GameWidget, self).__init__(**kwargs)
@@ -83,6 +88,7 @@ class GameWidget(RelativeLayout):
         self.init_ship()
         self.pre_fill_tiles_coordinates()
         self.generate_tiles_coordinates()
+        self.highscore_txt = "Highscore: " + str(self.check_highscore())
 
         if self.is_desktop():
             self._keyboard = Window.request_keyboard(self.keyboard_closed, self)
@@ -294,8 +300,7 @@ class GameWidget(RelativeLayout):
             while self.current_offset_y >= spacing_y:
                 self.current_offset_y -= spacing_y
                 self.current_y_loop += 1
-                self.score_txt = "SCORE: " + str(self.current_y_loop )
-                self.generate_tiles_coordinates()
+                self.score_txt = "SCORE: " + str(self.current_y_loop)
         
         if not self.check_ship_collision() and not self.state_game_over:
             self.state_game_over = True
@@ -305,7 +310,8 @@ class GameWidget(RelativeLayout):
             self.sounds_music1.stop()
             self.sounds_gameover_impact.play()
             Clock.schedule_once(self.play_gamover_voice_sound, 1)
-            print("you suck")
+            self.update_highscores()
+            self.highscore_txt = "Highscore: " + str(self.check_highscore())
     
     def play_gamover_voice_sound(self, dt):
         if self.state_game_over:

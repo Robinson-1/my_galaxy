@@ -162,3 +162,5 @@ cython_debug/
 audio/
 fonts/
 images/
+
+highscores.csv
