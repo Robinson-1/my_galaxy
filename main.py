@@ -27,7 +27,20 @@ class GameWindow(Screen):
     pass
 
 class ScorePopup(Popup):
-     pass
+
+    SCORE_FILENAME = r'./highscores.csv'
+    header_txt = ["Name", "Date", "Score"]
+    score_header = StringProperty(f"{header_txt[0]:<5}{header_txt[1]:^127}{header_txt[2]}")
+
+    def read_scores(self):
+        with open(self.SCORE_FILENAME, "r") as file:
+            lines = file.readlines()
+            output = ""
+            for line in lines:
+                temp = line.split(",")
+                output += f"{temp[0]:<15}{temp[1]:^125}{temp[2]:>10}"
+    
+        return output
 
 kv = Builder.load_file("main.kv")
 

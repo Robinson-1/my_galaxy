@@ -49,16 +49,28 @@ ScreenManager:
     BoxLayout:
         orientation: "vertical"
         size: root.width, root.height
+        Label:
+            font_size: dp(18)
+            bold: True
+            font_name: 'fonts/Eurostile.ttf'
+            size_hint: 1, .1
+            text:
+                root.score_header
+            color: 1, .3, .4, .85
         ScrollView:
+            size_hint: 1, .7
             do_scroll_x: False
             do_scroll_y: True
             Label:
+                font_size: dp(15)
+                font_name: 'fonts/Eurostile.ttf'
                 size_hint_y: None
                 height: self.texture_size[1]
                 text_size: self.width, None
                 padding: 10, 10
                 text:
-                    'really some amazing text\n' * 100
+                    root.read_scores()
         Button:
+            size_hint: 1, .2
             text: 'close'
             on_press: score_popup.dismiss()
